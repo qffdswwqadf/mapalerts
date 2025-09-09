@@ -31,7 +31,7 @@
 
     .container {
       display: flex;
-      justify-content: space-around;
+      justify-content: space-between;
       flex-wrap: wrap;
       gap: 20px;
     }
@@ -41,7 +41,7 @@
       padding: 10px;
       border-radius: 10px;
       flex: 1 1 400px;
-      max-width: 45%;
+      max-width: 60%;
     }
 
     iframe {
@@ -62,7 +62,40 @@
       margin-top: 10px;
       font-size: 18px;
       font-weight: bold;
-      color: #ff5555;
+    }
+
+    .button-alert {
+      display: inline-block;
+      margin-top: 10px;
+      padding: 10px 20px;
+      background-color: #2a2a2a; /* чуть светлее фона */
+      color: #ffffff;
+      border-radius: 5px;
+      text-decoration: none;
+      font-weight: bold;
+      transition: background-color 0.3s;
+    }
+
+    .button-alert:hover {
+      background-color: #3a3a3a;
+    }
+
+    /* Блок для правой колонки с трансляцией */
+    .right-column {
+      flex: 1 1 35%;
+      max-width: 400px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    @media (max-width: 900px) {
+      .container {
+        flex-direction: column;
+      }
+      .widget, .right-column {
+        max-width: 100%;
+      }
     }
   </style>
 </head>
@@ -70,22 +103,29 @@
 
   <div class="top-bar">
     <div id="datetime">Час і дата: --:-- --.--.----</div>
-    <div id="alert-status">Статус тривоги: Очікування...</div>
+    <div id="alert-status" class="alert-status">Статус тривоги: Очікування...</div>
   </div>
 
-  <h2>Карта тривог України та Telegram-канал</h2>
+  <h2>Карта тривог України та трансляція</h2>
 
   <div class="container">
+    <!-- Левая колонка: карта тривог -->
     <div class="widget">
       <iframe src="https://alerts.in.ua/"></iframe>
     </div>
 
-    <div class="widget">
-      <script async src="https://telegram.org/js/telegram-widget.js?22"
-              data-telegram-channel="Northern_Sich_ukr"
-              data-width="100%"
-              data-height="500">
-      </script>
+    <!-- Правая колонка: трансляция и кнопка -->
+    <div class="right-column">
+      <iframe width="100%" height="250" 
+              src="https://www.youtube.com/embed/ooJJSOlJZPQ" 
+              title="YouTube трансляція" 
+              frameborder="0" 
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+              allowfullscreen>
+      </iframe>
+      <a href="https://t.me/s/Northern_Sich_ukr" target="_blank" class="button-alert">
+        Чому тривога?
+      </a>
     </div>
   </div>
 
@@ -94,6 +134,7 @@
   </div>
 
   <script>
+    // Обновление времени
     function updateDateTime() {
       const now = new Date();
       const hours = now.getHours().toString().padStart(2,'0');
@@ -103,29 +144,26 @@
       const year = now.getFullYear();
       document.getElementById('datetime').textContent = `Час і дата: ${hours}:${minutes} ${day}.${month}.${year}`;
     }
-
-    // Обновление каждые 1 секунду
     setInterval(updateDateTime, 1000);
     updateDateTime();
 
-    // Пример "Статус тривоги" — можно подключить API позже
+    // Статус тривоги
     function updateAlertStatus() {
       const now = new Date();
       const hour = now.getHours();
-      // Например, тривога с 22:00 до 6:00
+      const alertEl = document.getElementById('alert-status');
+
       if(hour >= 22 || hour < 6){
-        document.getElementById('alert-status').textContent = "Статус тривоги: Йдіть в укриття!";
-        document.getElementById('alert-status').style.color = "#ff5555";
+        alertEl.textContent = "Статус тривоги: Йдіть в укриття!";
+        alertEl.style.color = "#ff5555";
       } else {
-        document.getElementById('alert-status').textContent = "актуальна iнформацiя";
-        document.getElementById('alert-status').style.color = "#55ff55";
+        alertEl.textContent = "Статус тривоги: немає тривоги";
+        alertEl.style.color = "#55ff55";
       }
     }
-
-    setInterval(updateAlertStatus, 60000); // обновляем раз в минуту
+    setInterval(updateAlertStatus, 60000);
     updateAlertStatus();
   </script>
 
 </body>
 </html>
-
