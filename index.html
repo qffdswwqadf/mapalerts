@@ -31,7 +31,7 @@
 
     .container {
       display: flex;
-      justify-content: space-between;
+      justify-content: space-around;
       flex-wrap: wrap;
       gap: 20px;
     }
@@ -41,7 +41,7 @@
       padding: 10px;
       border-radius: 10px;
       flex: 1 1 400px;
-      max-width: 60%;
+      max-width: 45%;
     }
 
     iframe {
@@ -79,24 +79,6 @@
     .button-alert:hover {
       background-color: #3a3a3a;
     }
-
-    /* Блок для правой колонки с трансляцией */
-    .right-column {
-      flex: 1 1 35%;
-      max-width: 400px;
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-    }
-
-    @media (max-width: 900px) {
-      .container {
-        flex-direction: column;
-      }
-      .widget, .right-column {
-        max-width: 100%;
-      }
-    }
   </style>
 </head>
 <body>
@@ -106,25 +88,19 @@
     <div id="alert-status" class="alert-status">Статус тривоги: Очікування...</div>
   </div>
 
-  <h2>Карта тривог України та трансляція</h2>
+  <h2>Карта тривог України та Telegram-канал</h2>
 
   <div class="container">
-    <!-- Левая колонка: карта тривог -->
     <div class="widget">
       <iframe src="https://alerts.in.ua/"></iframe>
-    </div>
-
-    <!-- Правая колонка: трансляция и кнопка -->
-    <div class="right-column">
-      <iframe>
-      <a href="https://t.me/s/Northern_Sich_ukr" target="_blank" class="button-alert">
-        Чому тривога?
-      </a>
     </div>
   </div>
 
   <div class="support">
-    Підтримка автора: <strong>4441 1110 4795 2019</strong> 💖
+    Підтримка автора: <strong>4441 1110 4795 2019</strong> 💖<br>
+    <a href="https://t.me/s/Northern_Sich_ukr" target="_blank" class="button-alert">
+      Чому тривога?
+    </a>
   </div>
 
   <script>
@@ -161,4 +137,3 @@
 
 </body>
 </html>
-
