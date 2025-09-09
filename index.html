@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Карта тривог України</title>
+  <style>
+    body {
+      background-color: #1e1e1e;
+      color: #f0f0f0;
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 20px;
+    }
+
+    h2 {
+      text-align: center;
+      margin-bottom: 10px;
+    }
+
+    .top-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+      padding: 10px 20px;
+      background-color: #2c2c2c;
+      border-radius: 10px;
+      font-size: 14px;
+    }
+
+    .container {
+      display: flex;
+      justify-content: space-around;
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+
+    .widget {
+      background-color: #2c2c2c;
+      padding: 10px;
+      border-radius: 10px;
+      flex: 1 1 400px;
+      max-width: 45%;
+    }
+
+    iframe {
+      width: 100%;
+      height: 500px;
+      border: none;
+      border-radius: 5px;
+    }
+
+    .support {
+      text-align: center;
+      margin-top: 20px;
+      font-size: 16px;
+    }
+
+    .alert-status {
+      text-align: center;
+      margin-top: 10px;
+      font-size: 18px;
+      font-weight: bold;
+      color: #ff5555;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="top-bar">
+    <div id="datetime">Час і дата: --:-- --.--.----</div>
+    <div id="alert-status">Статус тривоги: Очікування...</div>
+  </div>
+
+  <h2>Карта тривог України та Telegram-канал</h2>
+
+  <div class="container">
+    <div class="widget">
+      <iframe src="https://alerts.in.ua/"></iframe>
+    </div>
+
+    <div class="widget">
+      <script async src="https://telegram.org/js/telegram-widget.js?22"
+              data-telegram-channel="Northern_Sich_ukr"
+              data-width="100%"
+              data-height="500">
+      </script>
+    </div>
+  </div>
+
+  <div class="support">
+    Підтримка автора: <strong>4441 1110 4795 2019</strong> 💖
+  </div>
+
+  <script>
+    function updateDateTime() {
+      const now = new Date();
+      const hours = now.getHours().toString().padStart(2,'0');
+      const minutes = now.getMinutes().toString().padStart(2,'0');
+      const day = now.getDate().toString().padStart(2,'0');
+      const month = (now.getMonth()+1).toString().padStart(2,'0');
+      const year = now.getFullYear();
+      document.getElementById('datetime').textContent = `Час і дата: ${hours}:${minutes} ${day}.${month}.${year}`;
+    }
+
+    // Обновление каждые 1 секунду
+    setInterval(updateDateTime, 1000);
+    updateDateTime();
+
+    // Пример "Статус тривоги" — можно подключить API позже
+    function updateAlertStatus() {
+      const now = new Date();
+      const hour = now.getHours();
+      // Например, тривога с 22:00 до 6:00
+      if(hour >= 22 || hour < 6){
+        document.getElementById('alert-status').textContent = "Статус тривоги: Йдіть в укриття!";
+        document.getElementById('alert-status').style.color = "#ff5555";
+      } else {
+        document.getElementById('alert-status').textContent = "актуальна iнформацiя";
+        document.getElementById('alert-status').style.color = "#55ff55";
+      }
+    }
+
+    setInterval(updateAlertStatus, 60000); // обновляем раз в минуту
+    updateAlertStatus();
+  </script>
+
+</body>
+</html>
+
